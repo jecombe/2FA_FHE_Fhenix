@@ -2,11 +2,13 @@
 
 import { FC, useState } from 'react';
 import { ethers } from 'ethers';
+import useFhenix from "../hooks/fhenix/useFhenix";
 
 const ConnectMetaMask: FC = () => {
   const [account, setAccount] = useState<string | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
+  const { fhenixClient, fhenixProvider } = useFhenix();
 
   const connectMetaMask = async () => {
     if (window.ethereum) {
