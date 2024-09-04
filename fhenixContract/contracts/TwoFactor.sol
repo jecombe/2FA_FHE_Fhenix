@@ -28,7 +28,7 @@ contract TwoFactor is Permissioned {
     zeroAddr = FHE.asEaddress((0));
   }
 
-  function generateRandomU32() private returns (euint32) {
+  function generateRandomU32() private view returns (euint32) {
     return RandomMock.getFakeRandomU32();
   }
 
@@ -83,7 +83,7 @@ contract TwoFactor is Permissioned {
   // Finalisation de la connexion
   function checkPassword(
     inEuint32 calldata password
-  ) external returns (string memory) {
+  ) external returns (bool) {
     DataTypes.User storage authInfo = authRecords[msg.sender];
 
     FHE.req(zeroAddr.ne(authInfo.secondaryAddress));
@@ -95,6 +95,8 @@ contract TwoFactor is Permissioned {
     FHE.req(authInfo.tempPassword.eq(tempPassword)); //      "Not the secondary address"
 
     emit AuthSuccess(msg.sender);
+
+    return true;
   }
 
   // Finalisation de la connexion
