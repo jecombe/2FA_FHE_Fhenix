@@ -4,12 +4,11 @@ pragma solidity >=0.8.13 <0.9.0;
 import "@fhenixprotocol/contracts/FHE.sol";
 import {Permissioned, Permission} from "@fhenixprotocol/contracts/access/Permissioned.sol";
 
-import "./lib/RandomMock.sol";
 import "./struct/DataTypes.sol";
+import {RandomMock} from "./RandomMock.sol";
 
 contract TwoFactor is Permissioned {
   //Types / Struct
-  using RandomMock for uint256;
   DataTypes.User public USER;
   eaddress zeroAddr;
 
@@ -21,14 +20,16 @@ contract TwoFactor is Permissioned {
     address indexed primary,
     address indexed secondary
   );
+
   event AuthSuccess(address indexed primary);
-  event LoginRequest(address indexed primary);
+  event RequestTwoFactor(address indexed primary);
+  event Connect(address indexed primary);
 
   constructor() {
     zeroAddr = FHE.asEaddress((0));
   }
 
-  function generateRandomU32() private view returns (euint32) {
+  function generateRandomU32() private returns (euint32) {
     return RandomMock.getFakeRandomU32();
   }
 
@@ -48,6 +49,7 @@ contract TwoFactor is Permissioned {
 
     authInfo.secondaryAddress = secondAddress;
     authInfo.timeInterval = _timeInterval;
+    emit Connect(msg.sender);
   }
 
   function requestTwoFactor() external {
@@ -64,10 +66,9 @@ contract TwoFactor is Permissioned {
     authInfo.lastRequestTime = currentTime;
     authInfo.secondaryApproved = false;
 
-    emit LoginRequest(msg.sender);
+    emit RequestTwoFactor(msg.sender);
   }
 
-  // Approval secondaire
   function approveTwoFactor(address primaryAddress) external {
     DataTypes.User storage authInfo = authRecords[primaryAddress];
 
@@ -80,10 +81,7 @@ contract TwoFactor is Permissioned {
     authInfo.lastApprovalTime = block.timestamp;
   }
 
-  // Finalisation de la connexion
-  function checkPassword(
-    inEuint32 calldata password
-  ) external returns (bool) {
+  function checkPassword(inEuint32 calldata password) external returns (bool) {
     DataTypes.User storage authInfo = authRecords[msg.sender];
 
     FHE.req(zeroAddr.ne(authInfo.secondaryAddress));
@@ -99,7 +97,6 @@ contract TwoFactor is Permissioned {
     return true;
   }
 
-  // Finalisation de la connexion
   function getPassword(
     Permission memory permission
   ) external onlySender(permission) returns (string memory) {
@@ -115,7 +112,7 @@ contract TwoFactor is Permissioned {
     require(authInfo.secondaryApproved, "Secondary approval required");
 
     authInfo.tempPassword = generateRandomU32();
-
+    
     return FHE.sealoutput(authInfo.tempPassword, permission.publicKey);
   }
 }
