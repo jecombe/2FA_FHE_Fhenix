@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ethers, BrowserProvider } from "ethers";
 import { contractABI } from "../Abi/Abi";
 
-function SendTokens() {
+function Approval() {
 
   const onButtonclick = async (e) => {
     e.preventDefault();
@@ -34,10 +34,10 @@ function SendTokens() {
           onButtonclick(e);
         }}
       >
-        Request
+        Approval
       </button>
     </div>
   );
 }
 
-export default SendTokens;
+export default Approval;

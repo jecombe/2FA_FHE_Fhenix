@@ -34,7 +34,7 @@ function RetrieveTokens() {
 
   return (
     <div className=" flex flex-col items-center justify-center w-1/3 bg-white text-gray-800 p-6 rounded-lg shadow-black shadow-lg">
-      <h2 className="text-xl font-semibold mb-4">Card 1</h2>
+      <h2 className="text-xl font-semibold mb-4">Get password 2FA</h2>
 
       <button
         className="flex items-center justify-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
@@ -42,7 +42,7 @@ function RetrieveTokens() {
           onButtonclick(e);
         }}
       >
-        decrypt
+        get password
       </button>
       {decrypted}
     </div>

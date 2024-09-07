@@ -7,6 +7,7 @@ import SendTokens from "./components/SendTokens";
 import RetrieveTokens from "./components/RetrieveTokens";
 import GenerateStealthAddress from "./components/GenerateStealthAddress";
 import logo from "./assets/logo.png";
+import Approval from "./components/Approval";
 function App() {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [account, setAccount] = useState(null);
@@ -55,8 +56,10 @@ function App() {
             <>
               {" "}
               <GenerateStealthAddress />
-              <SendTokens></SendTokens>
+               <SendTokens></SendTokens> 
               <RetrieveTokens></RetrieveTokens>
+              <Approval></Approval>
+
             </>
           ) : (
             <>

@@ -1,53 +1,338 @@
 export const contractABI = [
   {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "bytes",
-            name: "data",
-            type: "bytes",
-          },
-        ],
-        internalType: "struct inEuint32",
-        name: "encryptedBalance",
-        type: "tuple",
-      },
-    ],
-    name: "store",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "bytes32",
-            name: "publicKey",
-            type: "bytes32",
-          },
-          {
-            internalType: "bytes",
-            name: "signature",
-            type: "bytes",
-          },
-        ],
-        internalType: "struct Permission",
-        name: "signature",
-        type: "tuple",
-      },
-    ],
-    name: "retrieve",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "inputs": [],
+    "name": "ECDSAInvalidSignature",
+    "type": "error"
   },
-];
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      }
+    ],
+    "name": "ECDSAInvalidSignatureLength",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "s",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ECDSAInvalidSignatureS",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidShortString",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SignerNotMessageSender",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SignerNotOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "str",
+        "type": "string"
+      }
+    ],
+    "name": "StringTooLong",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "primary",
+        "type": "address"
+      }
+    ],
+    "name": "AuthSuccess",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "EIP712DomainChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "primary",
+        "type": "address"
+      }
+    ],
+    "name": "LoginRequest",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "primary",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "secondary",
+        "type": "address"
+      }
+    ],
+    "name": "SecondaryAddressAssigned",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "USER",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "lastRequestTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timeInterval",
+        "type": "uint256"
+      },
+      {
+        "internalType": "eaddress",
+        "name": "secondaryAddress",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "secondaryApproved",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastApprovalTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "euint32",
+        "name": "tempPassword",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "primaryAddress",
+        "type": "address"
+      }
+    ],
+    "name": "approveTwoFactor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "authRecords",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "lastRequestTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timeInterval",
+        "type": "uint256"
+      },
+      {
+        "internalType": "eaddress",
+        "name": "secondaryAddress",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "secondaryApproved",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastApprovalTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "euint32",
+        "name": "tempPassword",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct inEuint32",
+        "name": "password",
+        "type": "tuple"
+      }
+    ],
+    "name": "checkPassword",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct inEaddress",
+        "name": "_secondaryAddress",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_timeInterval",
+        "type": "uint256"
+      }
+    ],
+    "name": "connexion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "eip712Domain",
+    "outputs": [
+      {
+        "internalType": "bytes1",
+        "name": "fields",
+        "type": "bytes1"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "version",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "verifyingContract",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "salt",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "extensions",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "publicKey",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct Permission",
+        "name": "permission",
+        "type": "tuple"
+      }
+    ],
+    "name": "getPassword",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "requestTwoFactor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
