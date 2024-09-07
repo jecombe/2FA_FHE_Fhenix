@@ -20,4 +20,4 @@ const getTheAbi = (name) => {
   }
 };
 
-getTheAbi("Counter");
+getTheAbi("TwoFactor");
